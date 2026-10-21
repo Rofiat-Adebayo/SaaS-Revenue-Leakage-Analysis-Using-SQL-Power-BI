@@ -1,0 +1,57 @@
+Usage Billing Detail HTML = 
+VAR TotalExpected = SUM(Billing[expected_amount])
+VAR TotalBilled = SUM(Billing[billed_amount])
+VAR TotalGap = [Total Potential Billing Gap]
+VAR TotalAdditionalUsers = [Total Additional Users]
+VAR CustomerSummary =
+    ADDCOLUMNS(
+        VALUES(Customers[customer_id]),
+        "__Name", CALCULATE(SELECTEDVALUE(Customers[customer_name])),
+        "__Expected", CALCULATE(SUM(Billing[expected_amount])),
+        "__Billed", CALCULATE(SUM(Billing[billed_amount])),
+        "__Gap", CALCULATE([Total Potential Billing Gap]),
+        "__Users", CALCULATE([Total Additional Users])
+    )
+VAR ExceptionCustomers =
+    FILTER(CustomerSummary, COALESCE([__Gap],0)>0 || COALESCE([__Users],0)>0)
+VAR AffectedCount =
+    COUNTROWS(FILTER(CustomerSummary, COALESCE([__Gap],0)>0))
+VAR RowsHTML =
+    CONCATENATEX(
+        TOPN(10, ExceptionCustomers, [__Gap], DESC, [__Users], DESC, Customers[customer_id], ASC),
+        "<tr>" &
+        "<td style='padding:10px;border-bottom:1px solid #302A3D;color:#F3F0FF;'>" &
+            COALESCE([__Name], "Customer " & FORMAT(Customers[customer_id],"0")) &
+            "<div style='font-size:11px;color:#A9A5B7;margin-top:3px;'>ID " & FORMAT(Customers[customer_id],"0") & "</div></td>" &
+        "<td style='padding:10px;border-bottom:1px solid #302A3D;'>" & FORMAT(COALESCE([__Expected],0),"£#,##0.00;£-#,##0.00;£0.00") & "</td>" &
+        "<td style='padding:10px;border-bottom:1px solid #302A3D;'>" & FORMAT(COALESCE([__Billed],0),"£#,##0.00;£-#,##0.00;£0.00") & "</td>" &
+        "<td style='padding:10px;border-bottom:1px solid #302A3D;font-weight:700;color:" & IF(COALESCE([__Gap],0)>0,"#F87171","#86EFAC") & ";'>" &
+            FORMAT(COALESCE([__Gap],0),"£#,##0.00;£-#,##0.00;£0.00") & "</td>" &
+        "<td style='padding:10px;border-bottom:1px solid #302A3D;'>" & FORMAT(COALESCE([__Users],0),"#,##0") & "</td></tr>",
+        "",
+        [__Gap], DESC
+    )
+VAR ExpectedText = FORMAT(COALESCE(TotalExpected,0),"£#,##0.00;£-#,##0.00;£0.00")
+VAR BilledText = FORMAT(COALESCE(TotalBilled,0),"£#,##0.00;£-#,##0.00;£0.00")
+VAR GapText = FORMAT(COALESCE(TotalGap,0),"£#,##0.00;£-#,##0.00;£0.00")
+VAR AffectedText = FORMAT(COALESCE(AffectedCount,0),"#,##0")
+VAR UsersText = FORMAT(COALESCE(TotalAdditionalUsers,0),"#,##0")
+RETURN
+"<div style='width:100%;height:100%;box-sizing:border-box;overflow:auto;font-family:Segoe UI,Arial,sans-serif;background:#101116;color:#F3F0FF;border:1px solid #8B5CF6;border-radius:12px;padding:16px;'>" &
+"<div style='display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;'>" &
+"<div><div style='font-size:19px;font-weight:700;line-height:1.3;'>USAGE &amp; BILLING DISCREPANCIES</div>" &
+"<div style='font-size:12px;color:#B8B5C7;margin-top:4px;line-height:1.5;'>Compare expected billing with billed amounts and identify customers requiring investigation.</div></div>" &
+"<div style='font-size:11px;color:#D6C4FF;border:1px solid #5B3D8E;border-radius:20px;padding:5px 9px;'>Current filter selection</div></div>" &
+"<div style='height:1px;background:#302A3D;margin:14px 0;'></div>" &
+"<div style='display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;'>" &
+"<div style='min-width:0;background:#191922;border:1px solid #302A3D;border-radius:9px;padding:12px;'><div style='font-size:12px;color:#C7C2D5;'>Expected billing</div><div style='font-size:22px;font-weight:700;margin-top:5px;overflow-wrap:anywhere;'>" & ExpectedText & "</div><div style='font-size:11px;color:#A9A5B7;margin-top:4px;'>Expected amount in selection</div></div>" &
+"<div style='min-width:0;background:#191922;border:1px solid #302A3D;border-radius:9px;padding:12px;'><div style='font-size:12px;color:#C7C2D5;'>Billed amount</div><div style='font-size:22px;font-weight:700;margin-top:5px;overflow-wrap:anywhere;'>" & BilledText & "</div><div style='font-size:11px;color:#A9A5B7;margin-top:4px;'>Amount recorded in billing</div></div>" &
+"<div style='min-width:0;background:#21192B;border:1px solid #6D4BB3;border-radius:9px;padding:12px;'><div style='font-size:12px;color:#D6C4FF;'>Potential billing gap</div><div style='font-size:22px;font-weight:700;color:#C4A1FF;margin-top:5px;overflow-wrap:anywhere;'>" & GapText & "</div><div style='font-size:11px;color:#C7C2D5;margin-top:4px;'>Positive expected-versus-billed gap</div></div></div>" &
+"<div style='display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:9px;'>" &
+"<div style='background:#191922;border:1px solid #302A3D;border-radius:9px;padding:11px;'><div style='font-size:12px;color:#C7C2D5;'>Customers with a positive gap</div><div style='font-size:21px;font-weight:700;color:#C4A1FF;margin-top:4px;'>" & AffectedText & "</div></div>" &
+"<div style='background:#191922;border:1px solid #302A3D;border-radius:9px;padding:11px;'><div style='font-size:12px;color:#C7C2D5;'>Additional users</div><div style='font-size:21px;font-weight:700;color:#C4A1FF;margin-top:4px;'>" & UsersText & "</div><div style='font-size:11px;color:#A9A5B7;margin-top:3px;'>Usage signal to investigate, not proof of under-billing by itself</div></div></div>" &
+"<div style='margin-top:16px;'><div style='font-size:15px;font-weight:700;'>Customer-level investigation</div><div style='font-size:12px;color:#B8B5C7;line-height:1.5;margin-top:4px;'>Top 10 customers with a billing-gap or additional-user signal, ranked by billing gap.</div>" &
+"<div style='width:100%;overflow-x:auto;margin-top:10px;border:1px solid #302A3D;border-radius:8px;'><table style='width:100%;border-collapse:collapse;font-size:12px;min-width:560px;'>" &
+"<thead><tr style='background:#25222F;color:#D6C4FF;text-align:left;'><th style='padding:10px;'>Customer</th><th style='padding:10px;'>Expected</th><th style='padding:10px;'>Billed</th><th style='padding:10px;'>Billing gap</th><th style='padding:10px;'>Additional users</th></tr></thead>" &
+"<tbody>" & RowsHTML & "</tbody></table></div>" &
+"<div style='font-size:11px;color:#A9A5B7;line-height:1.5;margin-top:8px;'>Figures respond to applicable report filters. Investigate usage against plan and billing rules before concluding that revenue was lost.</div></div></div>"
