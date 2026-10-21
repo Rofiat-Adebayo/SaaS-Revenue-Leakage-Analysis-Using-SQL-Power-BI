@@ -1,0 +1,83 @@
+Usage vs Billing HTML = 
+VAR BillingGap =
+    [Total Potential Billing Gap]
+
+VAR AffectedCustomers =
+    COUNTROWS (
+        FILTER (
+            VALUES ( Customers[customer_id] ),
+            CALCULATE ( [Total Potential Billing Gap] ) > 0
+        )
+    )
+
+VAR AdditionalUsers =
+    [Total Additional Users]
+
+VAR UsageGapOverlap =
+    COUNTROWS (
+        FILTER (
+            VALUES ( Customers[customer_id] ),
+            CALCULATE ( [Total Potential Billing Gap] ) > 0
+                && CALCULATE ( [Total Additional Users] ) > 0
+        )
+    )
+
+VAR GapText =
+    FORMAT ( COALESCE ( BillingGap, 0 ), "£#,##0.00;£-#,##0.00;£0.00" )
+VAR AffectedText =
+    FORMAT ( COALESCE ( AffectedCustomers, 0 ), "#,##0" )
+VAR AdditionalText =
+    FORMAT ( COALESCE ( AdditionalUsers, 0 ), "#,##0" )
+VAR OverlapText =
+    FORMAT ( COALESCE ( UsageGapOverlap, 0 ), "#,##0" )
+
+VAR StatusText =
+    IF (
+        COALESCE ( BillingGap, 0 ) > 0,
+        "Billing discrepancies identified — review affected customers.",
+        "No positive billing gap is identified in the current selection."
+    )
+VAR StatusColor =
+    IF ( COALESCE ( BillingGap, 0 ) > 0, "#F87171", "#86EFAC" )
+
+RETURN
+    "<div style='width:100%;height:100%;min-height:100%;box-sizing:border-box;font-family:Segoe UI,Arial,sans-serif;color:#F3F0FF;background:#101116;border:1px solid #8B5CF6;border-radius:12px;padding:12px;overflow:hidden;display:flex;flex-direction:column;'>" &
+        "<div style='display:flex;align-items:center;gap:9px;margin-bottom:4px;min-width:0;'>" &
+            "<div style='width:27px;height:27px;flex:0 0 27px;border-radius:50%;background:#2B2140;border:1px solid #6D4BB3;display:flex;align-items:center;justify-content:center;color:#C4A1FF;font-size:15px;font-weight:700;font-family:Segoe UI,Arial,sans-serif;'>↔</div>" &
+            "<div style='min-width:0;'>" &
+                "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:15px;font-weight:700;line-height:1.25;letter-spacing:.15px;'>USAGE VS BILLING</div>" &
+                "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:11px;line-height:1.35;color:#B8B5C7;margin-top:2px;'>Summary of detected billing discrepancies</div>" &
+            "</div>" &
+        "</div>" &
+        "<div style='height:1px;background:#302A3D;margin:9px 0 10px 0;'></div>" &
+        "<div style='display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;'>" &
+            "<div style='min-width:0;box-sizing:border-box;background:#191922;border:1px solid #302A3D;border-radius:8px;padding:9px;'>" &
+                "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:12px;line-height:1.3;color:#C7C2D5;'>Potential billing gap</div>" &
+                "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:26px;font-weight:700;line-height:1.2;color:#C4A1FF;margin-top:3px;overflow-wrap:anywhere;'>" & GapText & "</div>" &
+                "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:10px;line-height:1.3;color:#A9A5B7;margin-top:3px;'>Expected minus billed amount</div>" &
+            "</div>" &
+            "<div style='min-width:0;box-sizing:border-box;background:#191922;border:1px solid #302A3D;border-radius:8px;padding:9px;'>" &
+                "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:12px;line-height:1.3;color:#C7C2D5;'>Affected customers</div>" &
+                "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:26px;font-weight:700;line-height:1.2;color:#C4A1FF;margin-top:3px;'>" & AffectedText & "</div>" &
+                "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:10px;line-height:1.3;color:#A9A5B7;margin-top:3px;'>With a positive billing gap</div>" &
+            "</div>" &
+            "<div style='min-width:0;box-sizing:border-box;background:#191922;border:1px solid #302A3D;border-radius:8px;padding:9px;'>" &
+                "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:12px;line-height:1.3;color:#C7C2D5;'>Additional users</div>" &
+                "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:26px;font-weight:700;line-height:1.2;color:#C4A1FF;margin-top:3px;'>" & AdditionalText & "</div>" &
+                "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:10px;line-height:1.3;color:#A9A5B7;margin-top:3px;'>In the current filter selection</div>" &
+            "</div>" &
+            "<div style='min-width:0;box-sizing:border-box;background:#191922;border:1px solid #302A3D;border-radius:8px;padding:9px;'>" &
+                "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:12px;line-height:1.3;color:#C7C2D5;'>Usage/gap overlap</div>" &
+                "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:26px;font-weight:700;line-height:1.2;color:#C4A1FF;margin-top:3px;'>" & OverlapText & "</div>" &
+                "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:10px;line-height:1.3;color:#A9A5B7;margin-top:3px;'>Customers with both signals</div>" &
+            "</div>" &
+        "</div>" &
+        "<div style='display:flex;align-items:flex-start;gap:7px;margin-top:9px;padding:8px;border-radius:8px;background:#191922;border:1px solid #302A3D;'>" &
+            "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:15px;line-height:1;color:" & StatusColor & ";font-weight:700;'>!</div>" &
+            "<div style='min-width:0;'>" &
+                "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:11px;line-height:1.35;font-weight:600;color:" & StatusColor & ";'>" & StatusText & "</div>" &
+                "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:10px;line-height:1.35;color:#B8B5C7;margin-top:2px;'>Figures respond to the current report filters.</div>" &
+            "</div>" &
+        "</div>" &
+        "<div style='font-family:Segoe UI,Arial,sans-serif;margin-top:auto;margin-bottom:0;text-align:center;font-size:11px;font-weight:600;color:#D6C4FF;padding:9px 5px;border:1px solid #5B3D8E;border-radius:7px;flex:0 0 auto;'>View Usage &amp; Billing Details →</div>" &
+    "</div>"
