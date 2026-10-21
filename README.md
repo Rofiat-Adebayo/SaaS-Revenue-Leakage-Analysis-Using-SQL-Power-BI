@@ -1,5 +1,20 @@
-# SaaS-Revenue-Leakage-Detection
-A SQL-based revenue assurance project designed to identify potential revenue leakage in a SaaS business by analysing under-billing, excessive discounts, product usage discrepancies, and overdue payments.
+# SaaS Revenue Leakage Analysis Using SQL & Power BI
+A business intelligence and revenue assurance project combining SQL Server analysis and Power BI dashboard development to investigate potential revenue leakage in a SaaS business.
+
+<a id="top"></a>
+
+
+<img width="1774" height="887" alt="SQL Editor and Revenue Dashboard Split-screen (1)" src="https://github.com/user-attachments/assets/0b670db3-d878-4273-b11a-aa87ca2fa476" />
+
+
+![SQL Server](https://img.shields.io/badge/SQL%20Server-CC2927?style=for-the-badge&logo=microsoftsqlserver&logoColor=white)
+![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
+![DAX](https://img.shields.io/badge/DAX-8B5CF6?style=for-the-badge&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+
+
+
 
 ## Table of Contents
 
@@ -18,6 +33,7 @@ A SQL-based revenue assurance project designed to identify potential revenue lea
   - [Usage and Billing Discrepancy Analysis](#3-usage-and-billing-discrepancy-analysis)
   - [Late and Overdue Payment Analysis](#4-late-and-overdue-payment-analysis)
   - [Executive Revenue Leakage Summary](#5-executive-revenue-leakage-summary)
+- [Power BI Dashboard](#power-bi-dashboard)
 - [Business Impact](#business-impact)
 - [Recommendations](#recommendations)
 - [Technical Skills Demonstrated](#technical-skills-demonstrated)
@@ -378,8 +394,6 @@ Potential Under-billing = Expected Amount - Billed Amount
 ```
 
   
-<details>
-<summary><strong>Click to View the SQL Query</strong></summary>
 
 ```sql
 /* Detect under-billed customers
@@ -408,7 +422,7 @@ HAVING COUNT(*) =
        );
 ```
 
-</details>
+
 
 
 
@@ -442,8 +456,7 @@ The query counts the number of undercharged billing records for each customer an
 Potential Under-billing = Contracted Price - Billed Amount
 ```
 
-<details>
-<summary><strong>Click to View SQL Query</strong></summary>
+
 
 ```sql
 /* Provide a report of customers who have been undercharged
@@ -460,7 +473,7 @@ WHERE B.billed_amount < S.contracted_price
   AND B.bill_date BETWEEN '2026-06-01' AND '2026-08-31'
 GROUP BY B.customer_id;
 ```
-</details>
+
 
 
 
@@ -507,8 +520,7 @@ Discount Percentage > Maximum Allowed Discount Percentage
 
 
 
-<details>
- <summary><strong>Click to View SQL Query</strong></summary>
+
 
 ```sql
 /* Find customers who have received discounts
@@ -523,7 +535,7 @@ FROM Discounts
 WHERE discount_percentage > 20.00
 ORDER BY discount_percentage DESC;
 ```
-</details>
+
 
 
 
@@ -556,9 +568,6 @@ A discount is considered excessive when the customer's `discount_percentage` exc
 
 
 
-<details>
-<summary><strong>Click to View the SQL Query</strong></summary>
-
 ```sql
 /* Provide a report showing customers
    who have received excessive discounts, including
@@ -576,7 +585,6 @@ WHERE D.discount_percentage > P.max_discount_pct
 ORDER BY Excessive_Discount_pct DESC;
 ```
 
-</details>
 
 
 
@@ -621,8 +629,6 @@ The analysis examines:
 
 
 
- <details>
-<summary><strong>Click to View the SQL Query</strong></summary>
 
 ```sql
 /* Write a query to compare product usage data with billing records.
@@ -649,7 +655,6 @@ INNER JOIN Billing AS B
    AND MONTH(P.usage_month) = MONTH(B.bill_date);
 ```
 
-</details>
 
 
 
@@ -701,8 +706,6 @@ A customer is identified as having a usage and billing discrepancy when both con
 
 
 
-<details>
-<summary><strong>Click to View the SQL Query</strong></summary>
 
 ```sql
 -- Identify any discrepancies where customers have used
@@ -728,7 +731,7 @@ WHERE P.active_users > P.included_users
   AND B.expected_amount > B.billed_amount;
 ```
 
-</details>
+
 
 
 
@@ -774,8 +777,7 @@ This allows the analysis to identify unpaid invoices using both the recorded pay
 
 
 
-<details>
-<summary><strong>Click to View the SQL Query</strong></summary>
+
 
 ```sql
 -- Write a query to identify customers who have missed payments
@@ -794,8 +796,6 @@ WHERE payment_status = 'Overdue'
         AND payment_date IS NULL
       );
 ```
-
-</details>
 
 
 
@@ -841,9 +841,6 @@ The query returns the customer, invoice ID, invoice amount, due date, and curren
 
 
 
-<details>
-<summary><strong>Click to View the SQL Query</strong></summary>
-
 ```sql
 -- Provide details of customers with outstanding invoices,
 -- including the invoice amount and the date the payment was due.
@@ -858,7 +855,7 @@ FROM Billing
 WHERE payment_date IS NULL;
 ```
 
-</details>
+
 
 
 
@@ -910,8 +907,7 @@ The `UNION` operation is used to combine customers from the three leakage catego
 
 
 
-<details>
-<summary><strong>Click to View the SQL Query</strong></summary>
+
 
 ```sql
 /* EXECUTIVE REVENUE LEAKAGE SUMMARY
@@ -1015,7 +1011,7 @@ SELECT
 FROM AffectedCustomers;
 ```
 
-</details>
+
 
 
 
@@ -1043,6 +1039,75 @@ A total of **7 unique customers** were identified with at least one potential re
 - **Excessive discounts** accounted for **£214.00**, or approximately **10.1%** of the total.
 - **7 unique customers** had at least one potential revenue leakage issue.
 - Missed payments and under-billing were the two largest sources of identified financial exposure in the sample data.
+
+
+
+## Power BI Dashboard
+
+<img width="431" height="243" alt="image" src="https://github.com/user-attachments/assets/f9c6908b-e997-46f7-8d93-d28813f64dd1" />
+
+
+### From SQL Analysis to Business Intelligence
+
+SQL was used to investigate potential revenue leakage across SaaS billing, discounts, product usage, and payment records. Power BI was then used to transform these analytical results into an interactive dashboard that helps users explore financial exposure, identify affected customers, and prioritize areas requiring further investigation.
+
+The dashboard bridges the gap between raw data and business decision-making by presenting key performance indicators, revenue leakage trends, category-level analysis, and customer-level billing details in one reporting environment.
+
+
+<img width="444" height="286" alt="image" src="https://github.com/user-attachments/assets/115def03-1165-44a5-92a9-feb9ee6eb9c0" />
+
+
+
+
+
+### Dashboard Capabilities
+
+**1. Revenue Exposure Monitoring**
+
+Key metrics provide a consolidated view of potential billing gaps, affected customers, additional users, and usage-versus-billing discrepancies. These indicators help users identify areas where further investigation may be required.
+
+**2. Interactive Revenue Leakage Analysis**
+
+Users can explore under-billing, excessive discounts, overdue payments, and usage-versus-billing discrepancies through interactive category selections and report filters. Month, usage status, and customer type filters support more focused analysis.
+
+**3. Trend and Category Analysis**
+
+Visualizations help users examine patterns across the selected reporting period and compare the relative contribution of different revenue leakage categories. This supports the identification of areas that may require closer monitoring.
+
+**4. Customer-Level Investigation**
+
+Detailed billing views bring expected amounts, billed amounts, potential billing gaps, and additional user counts together at the customer level. This helps users move from high-level indicators to specific records that warrant review.
+
+**5. Dynamic Reporting and Custom Visual Design**
+
+
+<img width="563" height="351" alt="image" src="https://github.com/user-attachments/assets/03433a27-7e8b-4e96-8668-25662ee6c55b" />
+
+
+
+DAX measures support KPI calculations and filter-responsive reporting. HTML and CSS were incorporated into selected DAX measures to customize dashboard components, including navigation and insight cards, creating a consistent visual experience.
+
+
+
+
+### Business Value
+
+The dashboard supports revenue assurance by helping users:
+
+- Identify potential under-billing for further validation.
+- Review discounts that may exceed permitted thresholds.
+- Investigate cases where product usage exceeds included allowances.
+- Prioritize overdue invoices for collection follow-up.
+- Move from high-level financial indicators to customer-level evidence.
+
+By combining SQL-based investigation with interactive Power BI reporting, the project demonstrates how data analysis can support financial controls, improve visibility into billing risks, and inform evidence-based business decisions.
+
+### Tools and Technologies
+
+- **SQL Server:** Relational database development, data quality checks, joins, aggregations, and revenue leakage analysis.
+- **Power BI:** Interactive dashboards, KPI monitoring, data visualization, filtering, and customer-level investigation.
+- **DAX:** Measures and calculations for financial indicators and dynamic reporting.
+- **HTML/CSS:** Custom visual presentation for selected dashboard components.
 
 
 
@@ -1214,3 +1279,6 @@ Overall, the project demonstrates how structured SQL analysis can support **reve
 
 
 
+---
+
+[⬆ Back to Top](#top)
