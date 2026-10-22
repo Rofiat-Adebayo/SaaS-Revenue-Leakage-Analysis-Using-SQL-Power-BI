@@ -107,7 +107,7 @@ The final revenue leakage analysis identified **£2,124.00 in potential revenue 
 ### Key Findings
 
 - **£710.00** of potential leakage was identified from customers being billed below the expected amount.
-- **£214.00** was associated with discounts exceeding the approved product-level discount thresholds.
+- **£510.00** was associated with discounts exceeding the approved product-level discount thresholds.
 - **£1,200.00** was identified from missed or overdue payments.
 - **7 unique customers** were affected across the identified leakage categories.
 - Missed payments represented the **largest identified component** of potential leakage, accounting for approximately **56.5%** of the total.
