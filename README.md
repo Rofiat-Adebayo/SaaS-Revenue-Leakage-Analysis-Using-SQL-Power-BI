@@ -1045,12 +1045,14 @@ FROM AffectedCustomers;
 The final analysis identified **£2,124.00 in potential revenue leakage** across the June–August 2026 review period.
 
 - **Under-billing:** £710.00
-- **Excessive discounts:** £214.00
+- **Excessive discounts:** £506.00
 - **Missed payments:** £1,200.00
 
 A total of **7 unique customers** were identified with at least one potential revenue leakage issue across the three categories.
 
-<img width="693" height="383" alt="image" src="https://github.com/user-attachments/assets/e626a3b6-c14f-4d8b-a7a9-193cdf18baba" />
+
+
+<img width="950" height="462" alt="image" src="https://github.com/user-attachments/assets/0929bc4f-426a-44eb-a419-d979d178ef42" />
 
 
 
