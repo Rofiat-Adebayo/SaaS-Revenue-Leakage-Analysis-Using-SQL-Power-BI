@@ -1,10 +1,15 @@
 # SaaS Revenue Leakage Analysis Using SQL & Power BI
 A business intelligence and revenue assurance project combining SQL Server analysis and Power BI dashboard development to investigate potential revenue leakage in a SaaS business.
 
+
 <a id="top"></a>
+
+ 
+
 
 
 <img width="1774" height="887" alt="SQL Editor and Revenue Dashboard Split-screen (1)" src="https://github.com/user-attachments/assets/0b670db3-d878-4273-b11a-aa87ca2fa476" />
+
 
 
 ![SQL Server](https://img.shields.io/badge/SQL%20Server-CC2927?style=for-the-badge&logo=microsoftsqlserver&logoColor=white)
@@ -62,6 +67,24 @@ The final analysis provides a consolidated view of potential financial exposure,
 
 The project demonstrates how SQL can be used not only to retrieve data, but also to support **revenue assurance, financial controls, and data-driven business decision-making**.
 
+
+## Quick Links
+- [Explore the interactivity live dashboard](https://app.fabric.microsoft.com/view?r=eyJrIjoiYTBiNDQ5MDAtYjgzOC00Y2I3LWIxNzYtZWViZjMxNTJhODRlIiwidCI6IjM3ZDc1MjFhLTUwNzktNDhhZi05MTMxLTRhYzJjYjZmMWUzYSIsImMiOjF9)
+
+- [View Data quality check script](https://github.com/Rofiat-Adebayo/SaaS-Revenue-Leakage-Detection-Using-SQL/blob/main/Data%20quality%20check.sql)
+
+- [View Database Creation & Sample Data SQL](https://github.com/Rofiat-Adebayo/SaaS-Revenue-Leakage-Detection-Using-SQL/blob/main/Database%20Creation.sql)
+
+- [View the Html & CSS](https://github.com/Rofiat-Adebayo/SaaS-Revenue-Leakage-Analysis-Using-SQL-Power-BI/tree/main/power-bi-dax)
+
+
+### SQL Queries
+
+- [Under-billing](https://github.com/Rofiat-Adebayo/SaaS-Revenue-Leakage-Detection-Using-SQL/blob/main/Underbilled_Customers.sql)
+- [Excessive Discounts](https://github.com/Rofiat-Adebayo/SaaS-Revenue-Leakage-Detection-Using-SQL/blob/main/Over-discounted%20customers.sql)
+- [Usage and Billing Discrepancy](https://github.com/Rofiat-Adebayo/SaaS-Revenue-Leakage-Detection-Using-SQL/blob/main/Product%20usage%20vs%20billing.sql)
+- [Overdue Payments](https://github.com/Rofiat-Adebayo/SaaS-Revenue-Leakage-Detection-Using-SQL/blob/main/Late%20payment%20detection.sql)
+- [Revenue Leakage Summary](https://github.com/Rofiat-Adebayo/SaaS-Revenue-Leakage-Detection-Using-SQL/blob/main/Revenue%20leekage%20report.sql)
 
 
 ## Key Results
@@ -1045,6 +1068,9 @@ A total of **7 unique customers** were identified with at least one potential re
 ## Power BI Dashboard
 
 <img width="431" height="243" alt="image" src="https://github.com/user-attachments/assets/f9c6908b-e997-46f7-8d93-d28813f64dd1" />
+
+
+[view the the interactivity](https://app.fabric.microsoft.com/view?r=eyJrIjoiYTBiNDQ5MDAtYjgzOC00Y2I3LWIxNzYtZWViZjMxNTJhODRlIiwidCI6IjM3ZDc1MjFhLTUwNzktNDhhZi05MTMxLTRhYzJjYjZmMWUzYSIsImMiOjF9)
 
 
 ### From SQL Analysis to Business Intelligence
