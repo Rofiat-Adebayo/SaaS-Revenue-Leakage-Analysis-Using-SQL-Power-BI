@@ -94,7 +94,7 @@ The final revenue leakage analysis identified **£2,124.00 in potential revenue 
 | Revenue Leakage Category | Potential Leakage |
 | ------------------------ | -----------------:|
 | Under-billing | £710.00 |
-| Excessive Discounts | £214.00 |
+| Excessive Discounts | £506.00 |
 | Missed Payments | £1,200.00 |
 | **Total Potential Revenue Leakage** | **£2,124.00** |
 
