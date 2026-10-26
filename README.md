@@ -89,14 +89,14 @@ The project demonstrates how SQL can be used not only to retrieve data, but also
 
 ## Key Results
 
-The final revenue leakage analysis identified **£2,124.00 in potential revenue leakage** across the three financial leakage categories analysed during the June–August 2026 review period.
+The final revenue leakage analysis identified **£2,416.00 in potential revenue leakage** across the three financial leakage categories analysed during the June–August 2026 review period.
 
 | Revenue Leakage Category | Potential Leakage |
 | ------------------------ | -----------------:|
 | Under-billing | £710.00 |
 | Excessive Discounts | £506.00 |
 | Missed Payments | £1,200.00 |
-| **Total Potential Revenue Leakage** | **£2,124.00** |
+| **Total Potential Revenue Leakage** | **£2,416.00** |
 
 ### Customers Affected
 
@@ -107,7 +107,7 @@ The final revenue leakage analysis identified **£2,124.00 in potential revenue 
 ### Key Findings
 
 - **£710.00** of potential leakage was identified from customers being billed below the expected amount.
-- **£510.00** was associated with discounts exceeding the approved product-level discount thresholds.
+- **£506.00** was associated with discounts exceeding the approved product-level discount thresholds.
 - **£1,200.00** was identified from missed or overdue payments.
 - **7 unique customers** were affected across the identified leakage categories.
 - Missed payments represented the **largest identified component** of potential leakage, accounting for approximately **56.5%** of the total.
